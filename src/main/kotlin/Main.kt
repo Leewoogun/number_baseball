@@ -8,25 +8,21 @@ fun main(args: Array<String>) {
     println("숫자 야구를 시작합니다.")
 
     while(true){
+        print("숫자를 입력해주세요 : ")
         val input = readLine()!!.toInt()
-        println("숫자를 입력해주세요 : ${input}")
         val inputList = transList(input)
 
         val ball = ballOrStrike(random, inputList)[0]
         val strike = ballOrStrike(random, inputList)[1]
 
         printBallOrStrike(ball, strike)
-        if (strike == 3){
-            println("3개의 숫자를 모두 맞히셨습니다! 게임 종료")
-            println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요")
-
-            val reStart = readLine()!!.toInt()
-            if (reStart == 2){
-                break
-            }
+        if (threeStrike(strike)){
+            break
         }
+
     }
 }
+
 
 fun random() : MutableList<Int>{
     val randomList = mutableListOf<Int>()
@@ -47,7 +43,6 @@ fun transList(input : Int) : MutableList<Int>{
     inputList.add(hundred)
     inputList.add(ten)
     inputList.add(one)
-
     return inputList
 }
 
@@ -81,4 +76,19 @@ fun printBallOrStrike(ball : Int, strike : Int){
         println("${strike}스트라이크")
     }
     else println("낫싱")
+}
+
+fun threeStrike(strike : Int) : Boolean {
+    if (strike == 3) {
+        println("3개의 숫자를 모두 맞히셨습니다! 게임 종료")
+        println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요")
+        val reStart = readLine()!!.toInt()
+        if (reStart == 2){
+            return true
+        } else{
+            return false
+        }
+    } else {
+        return false
+    }
 }
