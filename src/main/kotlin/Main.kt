@@ -9,8 +9,10 @@ fun main(args: Array<String>) {
 
     while(true){
         print("숫자를 입력해주세요 : ")
-        val input = readLine()!!.toInt()
+        val input : String? = readLine()
+        inputException(input)
         val inputList = transList(input)
+
 
         val ball = ballOrStrike(random, inputList)[0]
         val strike = ballOrStrike(random, inputList)[1]
@@ -19,7 +21,6 @@ fun main(args: Array<String>) {
         if (threeStrike(strike)){
             break
         }
-
     }
 }
 
@@ -28,22 +29,26 @@ fun random() : MutableList<Int>{
     val randomList = mutableListOf<Int>()
     while (randomList.size < 3){
         val randomNum = (1..9).random()
-        randomList.add(randomNum)
+        if(!randomList.contains(randomNum)){
+            randomList.add(randomNum)
+        }
     }
 
     return randomList
 }
 
-fun transList(input : Int) : MutableList<Int>{
+fun transList(input : String?) : MutableList<Int>{
     val inputList = mutableListOf<Int>()
-    val hundred = input / 100
-    val ten = (input - hundred * 100) / 10
-    val one = input % 10
+    val numInput = input?.toInt() ?: throw IllegalArgumentException("어플리케이션을 종료합니다.")
+    val hundred = numInput / 100
+    val ten = (numInput - hundred * 100) / 10
+    val one = numInput % 10
 
     inputList.add(hundred)
     inputList.add(ten)
     inputList.add(one)
     return inputList
+
 }
 
 fun ballOrStrike(random : MutableList<Int>, input : MutableList<Int>) : Array<Int>{
@@ -83,12 +88,24 @@ fun threeStrike(strike : Int) : Boolean {
         println("3개의 숫자를 모두 맞히셨습니다! 게임 종료")
         println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요")
         val reStart = readLine()!!.toInt()
-        if (reStart == 2){
-            return true
-        } else{
-            return false
-        }
+        return if (reStart == 2) true else false
     } else {
         return false
     }
+}
+
+fun inputException(input : String?){
+    if (input?.length != 3){
+        throw IllegalArgumentException("어플리케이션을 종료합니다.")
+    }
+    if (!input.all{it.isDigit()}){
+        throw IllegalArgumentException("어플리케이션을 종료합니다.")
+    }
+
+    for (i in input.indices-1){
+        if(input[i] == input[i+1]){
+            throw IllegalArgumentException("어플리케이션을 종료합니다.")
+        }
+    }
+
 }
