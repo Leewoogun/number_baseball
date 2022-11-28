@@ -29,3 +29,9 @@
 ![image](https://user-images.githubusercontent.com/91789276/204092360-0fcc2df2-4b29-42d9-8873-dcd8b62d77a6.png)
 
 while문으로 3 스트라이크가 나올 때 까지 반복한다.
+
+### 입력 예외처리
+![image](https://user-images.githubusercontent.com/91789276/204236268-64452553-4acd-4904-ad2c-8b6bef3be3cb.png)
+
+입력을 문자열로 받아 세자리수가 아닐 시 또는 isdigit()함수를 이용해 문자열이 숫자가 아닐 시 또는 서로 다른 세자리 수가 아닐 시
+throw을 통해 IllegalArgumentException을 던지고 프로그램을 종료시킨다.
